@@ -45,7 +45,7 @@ document.addEventListener("click", (event) => {
   if (!event.target.closest(".site-header")) closeMenu();
 });
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 1080) closeMenu();
+  if (window.innerWidth > 1160) closeMenu();
 });
 
 document.querySelectorAll("[data-service]").forEach((link) => {
@@ -53,6 +53,28 @@ document.querySelectorAll("[data-service]").forEach((link) => {
     serviceSelect.value = link.dataset.service;
   });
 });
+
+const heroPhoto = document.querySelector(".hero-photo");
+const heroImage = heroPhoto.querySelector("img");
+let heroParallaxFrame = null;
+
+function updateHeroParallax() {
+  heroParallaxFrame = null;
+  const rect = heroPhoto.getBoundingClientRect();
+  if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+  const offset = Math.max(-100, Math.min(100, -rect.top * .28));
+  heroImage.style.setProperty("--hero-parallax", `${offset.toFixed(1)}px`);
+}
+
+function scheduleHeroParallax() {
+  if (heroParallaxFrame !== null) return;
+  heroParallaxFrame = requestAnimationFrame(updateHeroParallax);
+}
+
+window.addEventListener("scroll", scheduleHeroParallax, { passive: true });
+window.addEventListener("resize", scheduleHeroParallax);
+window.addEventListener("load", scheduleHeroParallax);
+scheduleHeroParallax();
 
 const servicesStage = document.querySelector(".services-stage");
 const serviceHub = servicesStage.querySelector(".orbit-hub");
