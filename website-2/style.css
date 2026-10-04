@@ -647,6 +647,22 @@ h1 em {
   font-size: 35px;
   line-height: 1.12;
 }
+.season-title-group {
+  width: fit-content;
+  margin-bottom: 20px;
+}
+.season-scroll-line {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #1677b2;
+  transform: scaleX(var(--season-line-progress, 0));
+  transform-origin: left center;
+  will-change: transform;
+}
+.heat-card .season-scroll-line {
+  background: var(--orange);
+}
 .season-card p {
   width: 60%;
   margin-bottom: 28px;

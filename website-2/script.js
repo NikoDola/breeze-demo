@@ -86,10 +86,14 @@ function updateSeasonParallax() {
 
   seasonCards.forEach((card) => {
     const rect = card.getBoundingClientRect();
-    if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
-
     const viewportCenter = window.innerHeight / 2;
     const cardCenter = rect.top + rect.height / 2;
+    const travelToCenter = (viewportCenter + rect.height / 2) / 2;
+    const lineProgress = clamp(1 - Math.abs(cardCenter - viewportCenter) / travelToCenter, 0, 1);
+    card.style.setProperty("--season-line-progress", lineProgress.toFixed(3));
+
+    if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+
     const offset = Math.max(-160, Math.min(160, (viewportCenter - cardCenter) * .35));
     const background = card.querySelector(".season-card-background-image");
     background.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(1.6)`;
@@ -109,18 +113,19 @@ scheduleSeasonParallax();
 const servicesStage = document.querySelector(".services-stage");
 const serviceHub = servicesStage.querySelector(".orbit-hub");
 const connectionSvg = servicesStage.querySelector(".service-connections");
+const orangeConnectionTargets = new Set([".orbit-heating", ".orbit-repairs", ".orbit-water"]);
 const connections = Array.from(servicesStage.querySelectorAll(".service-connection")).map((group) => ({
   image: servicesStage.querySelector(`${group.dataset.target} img`),
   path: group.querySelector("path"),
+  sequenceGroup: orangeConnectionTargets.has(group.dataset.target) ? 0 : 1,
   length: 0,
 }));
 let connectionsComplete = false;
 let animationStarted = false;
 let sequenceStart = null;
 let currentProgress = connections.map(() => 0);
-const connectionSpeed = 3;
-const connectionDurationMs = 1800 / connectionSpeed;
-const connectionStaggerMs = 1250 / connectionSpeed;
+const connectionDurationMs = 420;
+const connectionGroupGapMs = 90;
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -180,8 +185,9 @@ function runConnectionSequence(timestamp) {
   if (connectionsComplete) return;
   if (sequenceStart === null) sequenceStart = timestamp;
   const elapsed = timestamp - sequenceStart;
-  currentProgress = connections.map((_, index) => {
-    const progress = clamp((elapsed - index * connectionStaggerMs) / connectionDurationMs, 0, 1);
+  currentProgress = connections.map((connection) => {
+    const groupDelay = connection.sequenceGroup * (connectionDurationMs + connectionGroupGapMs);
+    const progress = clamp((elapsed - groupDelay) / connectionDurationMs, 0, 1);
     return progress * progress * (3 - 2 * progress);
   });
   drawConnections(currentProgress);
