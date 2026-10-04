@@ -76,6 +76,34 @@ window.addEventListener("resize", scheduleHeroParallax);
 window.addEventListener("load", scheduleHeroParallax);
 scheduleHeroParallax();
 
+const seasonCards = Array.from(document.querySelectorAll(".season-card"));
+let seasonParallaxFrame = null;
+
+function updateSeasonParallax() {
+  seasonParallaxFrame = null;
+
+  seasonCards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+
+    const viewportCenter = window.innerHeight / 2;
+    const cardCenter = rect.top + rect.height / 2;
+    const offset = Math.max(-160, Math.min(160, (viewportCenter - cardCenter) * .35));
+    const background = card.querySelector(".season-card-background-image");
+    background.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0) scale(1.6)`;
+  });
+}
+
+function scheduleSeasonParallax() {
+  if (seasonParallaxFrame !== null) return;
+  seasonParallaxFrame = requestAnimationFrame(updateSeasonParallax);
+}
+
+window.addEventListener("scroll", scheduleSeasonParallax, { passive: true });
+window.addEventListener("resize", scheduleSeasonParallax);
+window.addEventListener("load", scheduleSeasonParallax);
+scheduleSeasonParallax();
+
 const servicesStage = document.querySelector(".services-stage");
 const serviceHub = servicesStage.querySelector(".orbit-hub");
 const connectionSvg = servicesStage.querySelector(".service-connections");

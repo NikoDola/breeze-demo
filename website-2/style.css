@@ -234,13 +234,15 @@ section[id] {
   background: #b84408;
 }
 .header-call svg {
-  width: 17px;
-  height: 17px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  fill: currentColor;
+  stroke: none;
+}
+.header-call > span {
+  padding-left: 12px;
+  border-left: 1px solid rgba(255,255,255,.55);
 }
 .header-booking {
   display: inline-flex;
@@ -549,23 +551,34 @@ h1 em {
 .cool-card, .heat-card {
   background: none;
 }
-.season-card::before {
-  content: "";
+.season-card-background {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
+  overflow: hidden;
   pointer-events: none;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: .65;
+  opacity: .88;
   -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 75%);
   mask-image: linear-gradient(to left, #000 0%, transparent 75%);
 }
-.cool-card::before {
+.season-card-background-image {
+  position: absolute;
+  inset: -18% -12%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: translate3d(0, 0, 0) scale(1.6);
+  transform-origin: center;
+  will-change: transform;
+}
+.season-card > :not(.season-card-background) {
+  position: relative;
+  z-index: 1;
+}
+.cool-card .season-card-background-image {
   background-image: url("assets/ice-overlay.png");
   background-position: right bottom;
 }
-.heat-card::before {
+.heat-card .season-card-background-image {
   background-image: url("assets/bg-heating.webp");
   background-position: right center;
 }
@@ -1002,7 +1015,7 @@ h1 em {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: .83fr 1.17fr;
+  grid-template-columns: 1.17fr .83fr;
   align-items: start;
   gap: clamp(55px, 7vw, 100px);
 }
@@ -1050,11 +1063,8 @@ h1 em {
   flex: none;
   width: 30px;
   height: 30px;
-  fill: none;
-  stroke: #ff985c;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  fill: #ff985c;
+  stroke: none;
 }
 .contact-location {
   margin-top: 24px;
@@ -1063,6 +1073,7 @@ h1 em {
   line-height: 1.5;
 }
 .contact-form {
+  order: -1;
   padding: 36px;
   border: 1px solid rgba(255,255,255,.42);
   border-radius: 9px;
@@ -1521,8 +1532,8 @@ h1 em {
     gap: 5px;
   }
   .header-call svg {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
   }
   .header-booking {
     grid-column: 3;
@@ -1555,7 +1566,12 @@ h1 em {
   .hero-copy {
     min-height: calc(100vh - 67px);
     min-height: calc(100svh - 67px);
+    align-items: center;
     padding: 54px 28px 42px;
+    text-align: center;
+  }
+  .hero-copy::before {
+    display: none;
   }
   .eyebrow {
     font-size: 9px;
@@ -1569,15 +1585,32 @@ h1 em {
     line-height: 1.7;
   }
   .hero-actions {
+    width: 100%;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 12px;
   }
   .hero-actions .button {
-    width: 100%;
+    width: min(100%, 250px);
+    justify-content: center;
+  }
+  .hero-actions .button-arrow {
+    margin-left: 16px;
   }
   .hero-actions-separator {
-    align-self: center;
+    width: min(100%, 250px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-actions-separator::before, .hero-actions-separator::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: rgba(255,255,255,.45);
+  }
+  .hero-loc {
+    justify-content: center;
   }
   .hero-photo img {
     object-position: 70% center;
