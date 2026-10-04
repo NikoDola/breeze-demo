@@ -14,6 +14,7 @@ function closeSubmenus() {
 
 function closeMenu() {
   siteNav.classList.remove("is-open");
+  document.body.classList.remove("menu-open");
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open menu");
   closeSubmenus();
@@ -22,6 +23,7 @@ function closeMenu() {
 menuToggle.addEventListener("click", () => {
   const opening = !siteNav.classList.contains("is-open");
   siteNav.classList.toggle("is-open", opening);
+  document.body.classList.toggle("menu-open", opening);
   menuToggle.setAttribute("aria-expanded", String(opening));
   menuToggle.setAttribute("aria-label", opening ? "Close menu" : "Open menu");
   if (!opening) closeSubmenus();

@@ -99,7 +99,7 @@ section[id] {
   display: block;
 }
 .brand img {
-  width: 189px;
+  width: 240px;
   height: auto;
 }
 .site-nav {
@@ -133,8 +133,11 @@ section[id] {
   white-space: nowrap;
   transition: color .2s;
 }
-.nav-list a:hover, .nav-list a[aria-current="page"] {
+.nav-list a:hover {
   color: var(--blue);
+}
+.nav-list a[aria-current="page"], .nav-list a[aria-current="page"]:hover {
+  color: #2c4b5c;
 }
 .nav-parent {
   display: flex;
@@ -225,7 +228,7 @@ section[id] {
   color: #fff;
   background: #c94c0a;
   box-shadow: 0 4px 12px rgba(18,59,85,.18);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   white-space: nowrap;
   transition: background .2s;
@@ -248,6 +251,7 @@ section[id] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   min-height: 50px;
   padding: 13px 20px;
   border: 2px solid var(--blue-dark);
@@ -255,7 +259,7 @@ section[id] {
   color: #fff;
   background: var(--blue-dark);
   box-shadow: 0 4px 12px rgba(18,59,85,.18);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   white-space: nowrap;
   transition: background .2s;
@@ -263,11 +267,67 @@ section[id] {
 .header-booking:hover {
   background: var(--navy);
 }
+.header-booking-icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: currentColor;
+  stroke: none;
+}
 .call-short, .booking-short, .menu-toggle {
   display: none;
 }
 
 @media (min-width: 1161px) {
+  .header-inner {
+    width: calc(100% - 32px);
+    max-width: none;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 12px;
+  }
+  .brand {
+    grid-column: 1;
+  }
+  .site-nav {
+    grid-column: 2;
+    position: relative;
+  }
+  .header-actions {
+    grid-column: 3;
+  }
+  .nav-list {
+    position: relative;
+    gap: clamp(16px, 1.6vw, 28px);
+  }
+  .nav-list > li > a, .nav-parent > a {
+    position: relative;
+  }
+  .nav-list > li > a[aria-current="page"]::after, .nav-parent > a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--orange);
+  }
+  .nav-list > .has-submenu {
+    position: static;
+  }
+  .submenu, .submenu-hvac, .submenu-about {
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .header-actions {
+    gap: 8px;
+  }
+  .header-call, .header-booking {
+    padding-inline: 14px;
+  }
   .has-submenu:hover > .submenu, .has-submenu.is-open > .submenu {
     display: grid;
   }
@@ -697,7 +757,9 @@ h1 em {
   opacity: .95;
   vector-effect: non-scaling-stroke;
 }
-.service-connection:nth-child(even) path {
+.service-connection[data-target=".orbit-heating"] path,
+.service-connection[data-target=".orbit-repairs"] path,
+.service-connection[data-target=".orbit-water"] path {
   stroke: #efa66f;
 }
 .orbit-item {
@@ -719,11 +781,16 @@ h1 em {
 }
 .orbit-item h3 {
   margin: 0 0 5px;
-  color: var(--orange-dark);
   font-size: 17px;
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -.025em;
+}
+.orbit-heating h3, .orbit-repairs h3, .orbit-water h3 {
+  color: var(--orange-dark);
+}
+.orbit-cooling h3, .orbit-mini h3, .orbit-air h3 {
+  color: var(--blue);
 }
 .orbit-item p {
   margin: 0;
@@ -1304,15 +1371,19 @@ h1 em {
     height: 2px;
     display: block;
     background: var(--navy);
-    transition: transform .2s, opacity .2s;
+    transform-origin: center;
+    transition: transform .25s cubic-bezier(.4,0,.2,1), opacity .16s ease, width .25s ease;
   }
   .menu-toggle[aria-expanded="true"] span:first-child {
+    width: 92%;
     transform: translateY(7px) rotate(45deg);
   }
   .menu-toggle[aria-expanded="true"] span:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
   }
   .menu-toggle[aria-expanded="true"] span:last-child {
+    width: 92%;
     transform: translateY(-7px) rotate(-45deg);
   }
   .site-nav {
@@ -1506,17 +1577,20 @@ h1 em {
 }
 
 @media (max-width: 620px) {
+  .site-body.menu-open {
+    overflow: hidden;
+  }
   .container {
     width: min(100% - 36px, 500px);
   }
   .brand img {
-    width: 48px;
+    width: 64px;
   }
   .header-inner {
     min-height: 67px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) repeat(2, clamp(96px, 23vw, 124px)) minmax(0, 1fr);
-    gap: 6px;
+    grid-template-columns: auto minmax(0, 1fr) 48px 48px 39px;
+    gap: 10px;
   }
   .header-actions {
     display: contents;
@@ -1525,39 +1599,121 @@ h1 em {
     grid-column: 1;
   }
   .header-call {
-    grid-column: 2;
+    grid-column: 3;
+    width: 48px;
     min-height: 44px;
-    padding: 10px 4px;
-    font-size: 13px;
-    gap: 5px;
+    padding: 0;
+    font-size: 11px;
+    gap: 0;
+  }
+  .header-call > span {
+    padding-left: 0;
+    border-left: 0;
   }
   .header-call svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    display: block;
   }
   .header-booking {
-    grid-column: 3;
+    grid-column: 4;
+    width: 48px;
     min-height: 44px;
-    padding: 10px 12px;
-    font-size: 13px;
+    padding: 0;
+    font-size: 10px;
+  }
+  .header-booking-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
   }
   .call-long {
     display: none;
   }
   .call-short {
-    display: inline;
+    display: none;
   }
   .booking-long {
     display: none;
   }
   .booking-short {
-    display: inline;
+    display: none;
   }
   .menu-toggle {
-    grid-column: 4;
+    grid-column: 5;
     justify-self: end;
     width: 39px;
     height: 44px;
+  }
+  .menu-toggle[aria-expanded="true"] {
+    position: fixed;
+    z-index: 102;
+    top: 12px;
+    right: 18px;
+    border-color: rgba(18,59,85,.18);
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(13,44,65,.12);
+  }
+  .site-nav {
+    display: block;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    padding: 78px 24px 32px;
+    border-top: 0;
+    background: rgba(255,255,255,.98);
+    box-shadow: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(100%, 0, 0);
+    transition: transform .24s cubic-bezier(.4,0,.2,1), opacity .16s ease, visibility 0s linear .24s;
+  }
+  .site-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+  }
+  .nav-list {
+    width: min(100%, 360px);
+    margin-right: 0;
+    margin-left: auto;
+    padding: 0;
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+    transition: transform .26s cubic-bezier(.4,0,.2,1) .04s, opacity .18s ease .04s;
+  }
+  .site-nav.is-open .nav-list {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .nav-list > li {
+    text-align: right;
+  }
+  .nav-list > li > a, .nav-parent > a {
+    padding: 17px 0;
+    font-size: 18px;
+    text-align: right;
+  }
+  .nav-parent {
+    flex-direction: row-reverse;
+  }
+  .submenu-toggle {
+    width: 50px;
+    height: 54px;
+    border-right: 1px solid var(--line);
+    border-left: 0;
+  }
+  .submenu a {
+    padding: 13px 10px;
+    font-size: 15px;
+    text-align: right;
   }
   .hero, .hero-shell {
     min-height: calc(100vh - 67px);
@@ -1676,7 +1832,7 @@ h1 em {
     height: 74px;
   }
   .service-connections {
-    opacity: .52;
+    display: none;
   }
   .services-action .button {
     width: 100%;
@@ -1754,7 +1910,7 @@ h1 em {
 
 @media (max-width: 420px) {
   .brand img {
-    width: 48px;
+    width: 60px;
   }
   .header-inner {
     gap: 6px;
@@ -1762,22 +1918,27 @@ h1 em {
 }
 
 @media (max-width: 360px) {
+  .header-inner {
+    grid-template-columns: auto minmax(0, 1fr) 44px 44px 32px;
+  }
   .brand img {
-    width: 32px;
+    width: 56px;
   }
   .menu-toggle {
     width: 32px;
     padding-inline: 6px;
   }
   .header-call {
+    width: 44px;
     padding-inline: 4px;
-    font-size: 12px;
+    font-size: 10px;
   }
   .header-booking {
-    font-size: 12px;
+    width: 44px;
+    font-size: 10px;
   }
   .call-short {
-    display: inline;
+    display: none;
   }
   h1 {
     font-size: 57px;
@@ -1791,6 +1952,15 @@ h1 em {
   *, *::before, *::after {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
+  }
+  .site-nav {
+    transition-duration: .24s, .16s, 0s !important;
+  }
+  .site-nav .nav-list {
+    transition-duration: .26s, .18s !important;
+  }
+  .menu-toggle span {
+    transition-duration: .25s, .16s, .25s !important;
   }
   .services-stage.is-complete .hub-rotor {
     animation-duration: 16s !important;
