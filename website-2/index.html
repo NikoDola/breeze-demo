@@ -16,7 +16,10 @@
     <header class="site-header" id="top">
       <div class="container header-inner">
         <a class="brand" href="#top" aria-label="Breeze Heating and Cooling, back to top">
-          <img class="brand-image" src="../assets/breeze-icon.svg" alt="Breeze Heating & Cooling" width="69" height="41" />
+          <picture>
+            <source media="(max-width: 620px)" srcset="../assets/breeze-icon.svg" />
+            <img class="brand-image" src="assets/breeze-logo.svg" alt="Breeze Heating & Cooling" width="211" height="41" />
+          </picture>
         </a>
         <nav class="site-nav" id="site-nav" aria-label="Main navigation">
           <ul class="nav-list">
@@ -68,12 +71,12 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-shell">
           <div class="hero-copy">
-            <p class="eyebrow eyebrow-light"><span class="eyebrow-label"></span> MIDDLE TENNESSEE HEATING &amp; COOLING</p>
-            <h1 class="hero-title-title" id="hero-title">Comfort<br class="hero-title-title-break" />lives <em class="hero-title-title-emphasis">here.</em></h1>
+            <h1 class="hero-title-title" id="hero-title">Comfort<br class="hero-title-title-break" /><span class="hero-title-lives">lives</span> <em class="hero-title-title-emphasis">here.</em></h1>
             <p class="hero-copy-description">When your home needs a little help, the right people make all the difference. Breeze brings first class heating and cooling care to Nashville and surrounding communities.</p>
             <div class="hero-actions">
-              <a class="button button-orange" href="#contact">Request service <span class="button-arrow" aria-hidden="true">↗</span></a>
-              <a class="hero-phone" href="tel:+16155239898">Or call 615-523-9898 <span class="hero-phone-label" aria-hidden="true">↗</span></a>
+              <a class="button button-orange" href="#contact">Request services</a>
+              <span class="hero-actions-separator">or</span>
+              <a class="button button-blue hero-call-button" href="tel:+16155239898" aria-label="Call Breeze at 615-523-9898">Call Us <span class="button-arrow" aria-hidden="true">↗</span></a>
             </div>
             <div class="hero-loc"><span class="loc-dot" aria-hidden="true"></span> Proudly serving Nashville and surrounding areas</div>
           </div>

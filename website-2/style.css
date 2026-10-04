@@ -95,8 +95,11 @@ section[id] {
   justify-self: start;
   flex: none;
 }
+.brand picture {
+  display: block;
+}
 .brand img {
-  width: 82px;
+  width: 189px;
   height: auto;
 }
 .site-nav {
@@ -393,6 +396,9 @@ h2 {
   background: var(--navy);
 }
 .hero-copy {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -400,8 +406,24 @@ h2 {
   padding: 63px clamp(38px, 5.4vw, 82px) 63px max(32px, calc(50vw - 600px));
   color: #fff;
 }
-.hero-copy .eyebrow {
-  margin-bottom: 24px;
+.hero-copy::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 0;
+  width: 168vh;
+  width: 168svh;
+  height: 100vh;
+  height: 100svh;
+  background: url("../assets/breeze-icon.svg") left center / contain no-repeat;
+  opacity: .08;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.hero-copy > * {
+  position: relative;
+  z-index: 1;
 }
 h1 {
   margin-bottom: 21px;
@@ -410,8 +432,11 @@ h1 {
   font-weight: 820;
 }
 h1 em {
-  color: #ffad77;
+  color: #FC6803;
   font-style: normal;
+}
+.hero-title-lives {
+  color: #1677B2;
 }
 .hero-copy > p:not(.eyebrow) {
   max-width: 480px;
@@ -424,21 +449,13 @@ h1 em {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
 }
-.hero-phone {
+.hero-actions-separator {
   color: #fff;
-  font-size: 13px;
-  font-weight: 750;
-  white-space: nowrap;
-}
-.hero-phone:hover {
-  color: #ffbd91;
-}
-.hero-phone span {
-  margin-left: 4px;
-  color: #ffbd91;
   font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 .hero-loc {
   display: flex;
@@ -962,23 +979,28 @@ h1 em {
 
 .contact {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   background: var(--navy);
 }
 .contact::before {
   content: "";
   position: absolute;
-  right: -200px;
-  bottom: -330px;
-  width: 650px;
-  height: 650px;
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 50%;
-  box-shadow: 0 0 0 75px rgba(255,255,255,.018), 0 0 0 150px rgba(255,255,255,.012);
+  z-index: 0;
+  top: 50%;
+  right: 0;
+  width: 168vh;
+  width: 168svh;
+  height: 100vh;
+  height: 100svh;
+  background: url("../assets/breeze-icon.svg") right center / contain no-repeat;
+  opacity: .13;
   pointer-events: none;
+  transform: translate(50%, -50%) scaleX(-1);
 }
 .contact-grid {
   position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: .83fr 1.17fr;
   align-items: start;
@@ -1042,8 +1064,11 @@ h1 em {
 }
 .contact-form {
   padding: 36px;
+  border: 1px solid rgba(255,255,255,.42);
   border-radius: 9px;
-  background: #fff;
+  background: rgba(255,255,255, 1);
+  -webkit-backdrop-filter: blur(22px) saturate(125%);
+  backdrop-filter: blur(1px) saturate(125%);
   box-shadow: 0 24px 50px rgba(0,0,0,.12);
 }
 .form-heading {
@@ -1237,7 +1262,7 @@ h1 em {
 
 @media (max-width: 1160px) {
   .brand img {
-    width: 82px;
+    width: 165px;
   }
   .header-inner {
     min-height: 72px;
@@ -1544,14 +1569,15 @@ h1 em {
     line-height: 1.7;
   }
   .hero-actions {
-    align-items: flex-start;
-    gap: 18px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
   }
   .hero-actions .button {
     width: 100%;
   }
-  .hero-phone {
-    font-size: 12px;
+  .hero-actions-separator {
+    align-self: center;
   }
   .hero-photo img {
     object-position: 70% center;
