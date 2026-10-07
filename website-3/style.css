@@ -19,4 +19,41 @@
 @media(max-width:700px){.review-grid{grid-template-columns:1fr}.review-card{min-height:220px}}
 section[id]{scroll-margin-top:95px}
 
+/* Match each service photo's corner pattern to its card. */
+.service-image{width:102px;height:102px;aspect-ratio:1;overflow:hidden;border:0;border-radius:22px;background:#2c6b7e}
+.service-card:nth-child(2) .service-image,.service-card:nth-child(4) .service-image,.service-card:nth-child(6) .service-image{border-radius:30px 10px 30px 10px}
+.service-card:nth-child(3) .service-image,.service-card:nth-child(5) .service-image{border-radius:10px 30px 10px 30px}
+.service-image img{width:100%;height:100%;object-fit:cover;object-position:center}
+@media(max-width:1150px){.service-image{width:82px;height:82px}}
+@media(max-width:700px){.service-image{width:72px;height:72px}}
+@media(max-width:480px){.service-card:nth-child(n) .service-image{border-radius:20px}}
+
+/* Match the Nashville photo to the Smile section's organic image treatment. */
+:root{--brand-blue:#1677b2}
+.smile-art::before{background:var(--brand-blue)}
+.best-image{padding:0 28px 25px 0}
+.best-image::before{content:"";position:absolute;inset:30px 0 0 35px;border-radius:43% 57% 41% 59%/55% 42% 58% 45%;background:var(--brand-blue)}
+.best-image img{position:relative;border-radius:47% 53% 42% 58%/38% 45% 55% 62%}
+.best-image .image-caption{right:46px;bottom:43px}
+.call-symbol svg{display:block;width:18px;height:18px}
+.footer-reach a{display:inline-flex;align-items:center;align-self:flex-start;gap:10px}
+.footer-reach a svg{width:23px;height:23px;flex:none;color:var(--orange-light)}
+.header-request,.button.orange{color:#fff}
+
+/* Keep the desktop navigation centered on the viewport. */
+.site-nav{position:absolute;left:50%;width:max-content;margin-left:0;transform:translateX(-50%)}
+.nav-list{gap:7px}
+.header-actions{margin-left:auto}
+
+/* The mobile menu fills the space below the sticky header. */
+@media(max-width:930px){
+  .site-nav{left:0;right:0;width:100%;height:calc(100vh - 72px);height:calc(100dvh - 72px);max-height:none;transform:none;overflow-y:auto}
+  .site-nav::after{content:"";position:absolute;left:50%;bottom:42px;width:min(88vw,560px);aspect-ratio:211.1/41.1;transform:translateX(-50%);background:url("assets/breeze-logo-light.svg") center/contain no-repeat;opacity:.14;pointer-events:none}
+  .site-nav .nav-list{position:relative;z-index:1}
+  .menu-toggle span{transition:transform .25s ease,opacity .2s ease;transform-origin:center}
+  .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;transform:scaleX(.3)}
+  .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+}
+
 
