@@ -1,8 +1,8 @@
-# Website 5 — A breath of fresh care
+# Website 4 — A breath of fresh care
 
 An editorial Breeze concept using the shared curve sketch as a single flowing accent. The design uses paper tones, brand blue, a darker orange for readable white button labels, large typography, rectangular photography and an interactive service directory.
 
-Open `index.html` through a local static server or deploy the complete `website-5` folder. Assets and placeholder routes are self-contained. The logo is the Home link, carrying forward the requested navigation preference.
+Open `index.html` through a local static server or deploy the complete `website-4` folder. Assets and placeholder routes are self-contained. The logo is the Home link, carrying forward the requested navigation preference.
 
 ## Request form
 
